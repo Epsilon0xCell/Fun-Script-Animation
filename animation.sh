@@ -2,6 +2,15 @@
 
 # Enhanced terminal animation
 
+# The vertical motion is computed with bc, twice per frame. Without bc
+# those two calls fail on every frame, the offsets come out empty, and
+# the script spams errors while the rocket never moves; fail once, up
+# front, with the actual reason instead.
+if ! command -v bc >/dev/null 2>&1; then
+    echo "animation.sh needs bc for the sine-wave motion, and bc was not found in PATH." >&2
+    exit 1
+fi
+
 # Terminal dimensions (fall back to 80x24 when tput cannot report a size,
 # so a zero or missing size never causes a division by zero below)
 width=$(tput cols 2>/dev/null || echo 80)
@@ -20,7 +29,6 @@ trap "tput cnorm" EXIT
 x=1
 y=$((height / 2))
 x_speed=2
-y_dir=1
 y_amp=5
 y_step=0.1
 angle=0
@@ -54,7 +62,10 @@ clear
 
 # Animation loop
 while true; do
-    # Start drawing
+    # Each frame is assembled in one string and printed with a single
+    # write. Writing the 50 stars and the rocket as separate prints lets
+    # the terminal repaint between them, which reads as flicker; one
+    # buffer per frame keeps the whole frame atomic.
     buffer=""
 
     # Draw stars
@@ -79,6 +90,12 @@ while true; do
     angle=$(echo "$angle + $y_step" | bc -l)
     y_offset=$(echo "$y_amp * s($angle)" | bc -l)
     y=$(( height / 2 + $(printf "%.0f" "$y_offset") ))
+    # The amplitude is fixed at 5 rows, so on a terminal shorter than
+    # about 11 rows the wave would push the rocket to row 0 or past the
+    # last row, and the cursor-position escape for those rows is invalid.
+    # Clamp to the screen instead of trusting the terminal to be tall.
+    [ "$y" -lt 1 ] && y=1
+    [ "$y" -gt "$height" ] && y=$height
 
 
     sleep 0.05
