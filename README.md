@@ -1,3 +1,3 @@
 ![Banner](banner.png)
 
-# fun-script-animation
+# Fun-Script-Animation
