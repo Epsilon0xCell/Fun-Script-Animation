@@ -2,12 +2,22 @@
 
 # Enhanced terminal animation
 
-# Terminal dimensions
-width=$(tput cols)
-height=$(tput lines)
+# Terminal dimensions (fall back to 80x24 when tput cannot report a size,
+# so a zero or missing size never causes a division by zero below)
+width=$(tput cols 2>/dev/null || echo 80)
+height=$(tput lines 2>/dev/null || echo 24)
+[ "$width" -gt 0 ] 2>/dev/null || width=80
+[ "$height" -gt 0 ] 2>/dev/null || height=24
+
+# Restore the cursor on any exit, including Ctrl+C. This must be registered
+# before the loop: the old script registered it after an infinite loop, so
+# it could never run and Ctrl+C left the cursor hidden. It is an EXIT trap
+# only, on purpose: trapping INT without exiting would swallow Ctrl+C and
+# the animation would never stop.
+trap "tput cnorm" EXIT
 
 # Rocket initial state
-x=0
+x=1
 y=$((height / 2))
 x_speed=2
 y_dir=1
@@ -28,8 +38,8 @@ C_RESET="\033[0m"
 
 # Generate stars
 for ((i=0; i<num_stars; i++)); do
-    stars_x[$i]=$((RANDOM % width))
-    stars_y[$i]=$((RANDOM % height))
+    stars_x[$i]=$((1 + RANDOM % width))
+    stars_y[$i]=$((1 + RANDOM % height))
     # Use different characters for twinkling effect
     case $((RANDOM % 3)) in
         0) stars_char[$i]="." ;;
@@ -61,7 +71,7 @@ while true; do
     # Update rocket position
     # Horizontal movement
     x=$((x + x_speed))
-    if [ $x -ge $((width - 2)) ] || [ $x -le 0 ]; then
+    if [ $x -ge $((width - 2)) ] || [ $x -le 1 ]; then
         x_speed=$((x_speed * -1))
     fi
 
@@ -73,6 +83,3 @@ while true; do
 
     sleep 0.05
 done
-
-# Restore cursor on exit (e.g., with Ctrl+C)
-trap "tput cnorm" EXIT
