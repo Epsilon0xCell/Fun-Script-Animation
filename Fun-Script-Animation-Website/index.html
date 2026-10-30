@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fun-Script-Animation: A Storyboard in Six Panels</title>
+<!-- pages-campaign site for Epsilon0xCell/Fun-Script-Animation; source of truth: Fun-Script-Animation-Website/ on the default branch -->
+<style>
+  /* I built this page as a storyboard because the repo is an animation.
+     Each panel below is one beat of animation.sh in order, and the panel
+     text quotes positions and messages the script really produced. */
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0d0d10; color: #e8e4d5; font-family: Verdana, Geneva, sans-serif; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 34px 26px 60px; }
+  .kicker { color: #ffd23f; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin: 0; }
+  h1 { font-family: "Trebuchet MS", Verdana, sans-serif; font-size: 42px; margin: 8px 0 6px; color: #fff; }
+  .lede { font-size: 17px; line-height: 1.6; max-width: 62ch; margin: 0 0 18px; }
+  .banner { width: 100%; height: auto; display: block; border: 3px solid #ffd23f; }
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 30px; }
+  .badges img { height: 20px; }
+  /* The film strip holes are just a row of small squares I drew with
+     borders. Cheap, and it reads as film from across the room. */
+  .strip { display: flex; gap: 10px; margin: 26px 0 10px; }
+  .strip i { display: block; width: 16px; height: 10px; border: 1.5px solid #5a5748; }
+  h2.board-title { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: #ffd23f; margin: 30px 0 4px; }
+  .panel { border: 2px solid #3d3b30; background: #15151a; padding: 20px 22px; margin: 18px 0; display: grid; grid-template-columns: 86px 1fr; gap: 18px; }
+  .frame-no { font-family: "Trebuchet MS", Verdana, sans-serif; font-size: 30px; color: #ff5a4e; border-right: 2px dashed #3d3b30; padding-right: 14px; }
+  .frame-no small { display: block; font-size: 10px; letter-spacing: 2px; color: #9a967f; text-transform: uppercase; margin-top: 4px; }
+  .panel h3 { margin: 0 0 8px; font-size: 18px; color: #fff; }
+  .panel p { margin: 0 0 10px; line-height: 1.65; font-size: 15px; max-width: 66ch; }
+  .panel p:last-child { margin-bottom: 0; }
+  pre.screen { background: #000; border: 1px solid #3d3b30; color: #ffd23f; padding: 13px 15px; font-family: "Courier New", monospace; font-size: 13.5px; line-height: 1.6; overflow-x: auto; margin: 10px 0; white-space: pre-wrap; }
+  pre.screen .rocket { color: #ff5a4e; font-weight: bold; }
+  pre.screen .dim { color: #9a967f; }
+  section.prose p { line-height: 1.7; font-size: 16px; max-width: 68ch; }
+  h2.plain { font-size: 22px; color: #fff; margin: 40px 0 12px; font-family: "Trebuchet MS", Verdana, sans-serif; }
+  code { font-family: "Courier New", monospace; color: #ffd23f; background: #1d1d22; padding: 0 4px; }
+  pre.screen code { background: none; padding: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .chip { border: 1.5px solid #ffd23f; color: #ffd23f; padding: 4px 11px; font-size: 13px; }
+  a { color: #ffd23f; }
+  footer { border-top: 2px solid #3d3b30; margin-top: 46px; padding-top: 16px; font-size: 13px; color: #9a967f; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  @media (max-width: 640px) { .panel { grid-template-columns: 1fr; } .frame-no { border-right: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="kicker">Storyboard / one shell script / 124 lines</p>
+  <h1>Fun-Script-Animation</h1>
+  <p class="lede">A terminal animation: a rocket flies back and forth across a field of 50 stars, bobbing on a sine wave, while the cursor is hidden for the duration of the show.</p>
+
+  <img class="banner" src="https://raw.githubusercontent.com/Epsilon0xCell/Fun-Script-Animation/main/banner.png" alt="Fun-Script-Animation banner">
+  <div class="badges">
+    <img src="https://img.shields.io/github/stars/Epsilon0xCell/Fun-Script-Animation" alt="Stars">
+    <img src="https://img.shields.io/github/forks/Epsilon0xCell/Fun-Script-Animation" alt="Forks">
+    <img src="https://img.shields.io/github/last-commit/Epsilon0xCell/Fun-Script-Animation" alt="Last commit">
+    <img src="https://img.shields.io/github/languages/top/Epsilon0xCell/Fun-Script-Animation" alt="Top language">
+    <img src="https://img.shields.io/github/repo-size/Epsilon0xCell/Fun-Script-Animation" alt="Repo size">
+  </div>
+
+  <div class="strip" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <h2 class="board-title">The board: the script, panel by panel</h2>
+
+  <div class="panel">
+    <div class="frame-no">01<small>Before frame one</small></div>
+    <div>
+      <h3>The refusal comes first</h3>
+      <p>The script checks for <code>bc</code> before it draws anything, because the sine motion calls <code>bc</code> twice per frame. Without it, both calls fail every frame, the offsets come out empty, and the old behavior was error spam under a rocket that never moves. Now it fails once, up front, with the reason. This panel is a real run on the staging machine, which has no <code>bc</code> installed:</p>
+      <pre class="screen">$ bash animation.sh
+animation.sh needs bc for the sine-wave motion, and bc was not found in PATH.
+<span class="dim">exit code: 1. No frame was drawn.</span></pre>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="frame-no">02<small>The set</small></div>
+    <div>
+      <h3>Fifty stars, placed once</h3>
+      <p>The starfield is placed before the loop and never moves again. Each star gets a position at <code>1 + RANDOM % width</code> by <code>1 + RANDOM % height</code> and one character out of <code>.</code>, <code>*</code>, and <code>+</code>, kept for the whole run. The plus 1 matters: terminals number rows and columns from 1, and a position of 0 is invalid. Colors are yellow for the stars, red for the rocket, both stored as literal backslash sequences and interpreted only by the final <code>echo -ne</code> that prints each frame.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="frame-no">03<small>Frame one</small></div>
+    <div>
+      <h3>The rocket enters at the middle row</h3>
+      <p>Each frame is built in a single buffer and printed with one write, so the terminal never repaints half a frame. In a pty run I captured for this page (with a small stub standing in for the missing <code>bc</code>), the first frame put the rocket at row 12, column 1 of an 80 by 24 terminal, the middle row, moving two columns per frame at about 20 frames per second:</p>
+      <pre class="screen"><span class="dim">frame 1</span>  cursor to row 12, col 1   <span class="rocket">[rocket]</span>
+<span class="dim">frame 2</span>  cursor to row 12, col 3   <span class="rocket">[rocket]</span>
+<span class="dim">frame 3</span>  cursor to row 13, col 5   <span class="rocket">[rocket]</span>
+<span class="dim">frame 4</span>  cursor to row 13, col 7   <span class="rocket">[rocket]</span></pre>
+      <p>The row is recomputed from the middle on every frame instead of added to the last row, so rounding in the sine math cannot drift the rocket away from the center over a long run.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="frame-no">04<small>Short terminal</small></div>
+    <div>
+      <h3>The wave gets clamped to the screen</h3>
+      <p>The wave amplitude is fixed at 5 rows around the middle. On a terminal shorter than about 11 rows, that math pushes the rocket to row 0 or past the last row, and the position escape for those rows is invalid. Deep Wave 2 proved it with a stub: on an 8-row terminal the old script emitted negative-row escapes in 5 of 6 rocket frames. The fixed script clamps <code>y</code> to the screen, 1 at the top and <code>height</code> at the bottom, and the same test emits 0 bad escapes, with the rocket sitting at row 1. The size itself is guarded too: if <code>tput</code> cannot report one, the script falls back to 80 columns by 24 rows instead of dividing by zero. One limit I left in on purpose: the size is read once at the start, so resizing the window mid-run keeps the old size until you restart the script.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="frame-no">05<small>The bounce</small></div>
+    <div>
+      <h3>It turns around without leaving</h3>
+      <p>The bounce test uses greater-or-equal and less-or-equal, never equality, because the rocket moves two columns per frame and can step straight past the exact edge column. An equality test would miss the edge on those steps and the rocket would leave the screen. It flips direction at column 1 on the left and at <code>width - 2</code> on the right, then flies back across the same fixed stars.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="frame-no">06<small>Exit</small></div>
+    <div>
+      <h3>Ctrl+C gives the cursor back</h3>
+      <p>The cursor is hidden with <code>tput civis</code> only after the restore trap is registered, and the trap sits before the loop: <code>trap "tput cnorm" EXIT</code>. The first version of this script put that line after the infinite loop, where it could never run, so Ctrl+C left the cursor hidden. It is an EXIT trap only, on purpose; trapping INT without exiting would swallow Ctrl+C and the animation would never stop. Stop the show and the stub harness log shows <code>civis</code> at the start and <code>cnorm</code> after the interrupt, which is the proof the cursor comes back.</p>
+    </div>
+  </div>
+
+  <section class="prose">
+    <h2 class="plain">What this is</h2>
+    <p>I wrote <code>animation.sh</code> as a small terminal show with no ending of its own. There is no story, no score, and nothing to win. A rocket crosses a starfield on a sine wave until I stop it. The whole repo is that one script, 124 lines of bash, plus the banner and logo.</p>
+    <p>Most of the work in the last two passes was not the picture. It was the edges: a cursor that has to come back, a terminal too short for the wave, a missing <code>bc</code> that should say so once instead of failing twice per frame forever. A toy script is a good place to practice that, because the failure modes are easy to see and the fix is a few lines you can point at.</p>
+  </section>
+
+  <h2 class="plain">Run it</h2>
+  <!-- The README command, exactly. There is no install step and no
+       second command hiding anywhere in the repo. -->
+  <pre class="screen">$ bash animation.sh
+<span class="dim">Stop with Ctrl+C. The script restores the cursor on exit.
+Needs: a terminal, tput, and bc.</span></pre>
+  <div class="chips">
+    <span class="chip">Bash</span>
+    <span class="chip">tput (ncurses)</span>
+    <span class="chip">bc for sine math</span>
+    <span class="chip">ANSI position escapes</span>
+    <span class="chip">About 20 frames per second</span>
+  </div>
+  <p>Source: <a href="https://github.com/Epsilon0xCell/Fun-Script-Animation">github.com/Epsilon0xCell/Fun-Script-Animation</a> and my profile at <a href="https://github.com/Epsilon0xCell">github.com/Epsilon0xCell</a>.</p>
+
+  <h2 class="plain">What was not watched</h2>
+  <p>The campaign verified this script under a stub <code>tput</code> and <code>bc</code> harness and, for this page, I ran it briefly in a pty on the staging machine: the refusal in panel 01 is that run, word for word, and the positions in panel 03 were captured from its output. The campaign did not watch it on a real terminal display, so colors and pacing are as coded, not as seen on a physical screen. I am saying that plainly because a storyboard can make a 124-line script look more finished than it is.</p>
+
+  <footer>
+    <span>Built by Epsilon0xCell</span>
+    <span>Storyboard drawn from real runs. The rocket glyph stays out of this page; the script draws its own.</span>
+  </footer>
+
+</div>
+</body>
+</html>
