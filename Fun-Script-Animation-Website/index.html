@@ -3,150 +3,414 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fun-Script-Animation: A Storyboard in Six Panels</title>
+<title>Fun-Script-Animation: The Green Room Terminal Theatre</title>
 <!-- pages-campaign site for Epsilon0xCell/Fun-Script-Animation; source of truth: Fun-Script-Animation-Website/ on the default branch -->
 <style>
-  /* I built this page as a storyboard because the repo is an animation.
-     Each panel below is one beat of animation.sh in order, and the panel
-     text quotes positions and messages the script really produced. */
+  /* I set this page in a green room because that is where a show waits
+     before it goes on. My script is a show with no ending, so the room
+     around the stage stays dark green and quiet, and the terminal on
+     stage does all the moving. */
   * { box-sizing: border-box; }
-  body { margin: 0; background: #0d0d10; color: #e8e4d5; font-family: Verdana, Geneva, sans-serif; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 34px 26px 60px; }
-  .kicker { color: #ffd23f; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin: 0; }
-  h1 { font-family: "Trebuchet MS", Verdana, sans-serif; font-size: 42px; margin: 8px 0 6px; color: #fff; }
-  .lede { font-size: 17px; line-height: 1.6; max-width: 62ch; margin: 0 0 18px; }
-  .banner { width: 100%; height: auto; display: block; border: 3px solid #ffd23f; }
-  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 30px; }
+  body { margin: 0; background: #0b120d; color: #dfe6d8; font-family: Georgia, "Times New Roman", serif; }
+  .room { max-width: 1180px; margin: 0 auto; padding: 30px 22px 56px; }
+  .mast { display: flex; gap: 20px; align-items: center; border-bottom: 1px solid #2c4634; padding-bottom: 18px; }
+  .mast img.logo { width: 74px; height: 74px; object-fit: contain; }
+  .kicker { margin: 0; font-family: "Courier New", monospace; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #c9a86a; }
+  h1 { margin: 4px 0 6px; font-size: 40px; font-weight: normal; color: #f4f1e4; }
+  .lede { margin: 0; font-size: 17px; line-height: 1.6; max-width: 64ch; }
+  figure.bannerfig { margin: 20px 0 8px; }
+  figure.bannerfig img { width: 100%; height: auto; display: block; border: 1px solid #2c4634; }
+  figcaption { font-size: 13px; color: #9db29a; padding-top: 6px; font-style: italic; }
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 6px; }
   .badges img { height: 20px; }
-  /* The film strip holes are just a row of small squares I drew with
-     borders. Cheap, and it reads as film from across the room. */
-  .strip { display: flex; gap: 10px; margin: 26px 0 10px; }
-  .strip i { display: block; width: 16px; height: 10px; border: 1.5px solid #5a5748; }
-  h2.board-title { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: #ffd23f; margin: 30px 0 4px; }
-  .panel { border: 2px solid #3d3b30; background: #15151a; padding: 20px 22px; margin: 18px 0; display: grid; grid-template-columns: 86px 1fr; gap: 18px; }
-  .frame-no { font-family: "Trebuchet MS", Verdana, sans-serif; font-size: 30px; color: #ff5a4e; border-right: 2px dashed #3d3b30; padding-right: 14px; }
-  .frame-no small { display: block; font-size: 10px; letter-spacing: 2px; color: #9a967f; text-transform: uppercase; margin-top: 4px; }
-  .panel h3 { margin: 0 0 8px; font-size: 18px; color: #fff; }
-  .panel p { margin: 0 0 10px; line-height: 1.65; font-size: 15px; max-width: 66ch; }
-  .panel p:last-child { margin-bottom: 0; }
-  pre.screen { background: #000; border: 1px solid #3d3b30; color: #ffd23f; padding: 13px 15px; font-family: "Courier New", monospace; font-size: 13.5px; line-height: 1.6; overflow-x: auto; margin: 10px 0; white-space: pre-wrap; }
-  pre.screen .rocket { color: #ff5a4e; font-weight: bold; }
-  pre.screen .dim { color: #9a967f; }
-  section.prose p { line-height: 1.7; font-size: 16px; max-width: 68ch; }
-  h2.plain { font-size: 22px; color: #fff; margin: 40px 0 12px; font-family: "Trebuchet MS", Verdana, sans-serif; }
-  code { font-family: "Courier New", monospace; color: #ffd23f; background: #1d1d22; padding: 0 4px; }
-  pre.screen code { background: none; padding: 0; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
-  .chip { border: 1.5px solid #ffd23f; color: #ffd23f; padding: 4px 11px; font-size: 13px; }
-  a { color: #ffd23f; }
-  footer { border-top: 2px solid #3d3b30; margin-top: 46px; padding-top: 16px; font-size: 13px; color: #9a967f; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-  @media (max-width: 640px) { .panel { grid-template-columns: 1fr; } .frame-no { border-right: none; } }
+  /* The proscenium is two nested borders and a valance bar. I kept it
+     flat on purpose: the depth on this page comes from the dark room
+     against the lit stage, not from shadows stacked on shadows. */
+  .stagegrid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 26px; margin-top: 30px; align-items: start; }
+  .proscenium { border: 3px solid #c9a86a; outline: 10px solid #14301e; background: #04150a; }
+  .valance { background: #1d5c38; color: #f4f1e4; font-family: "Courier New", monospace; letter-spacing: 3px; text-transform: uppercase; font-size: 12px; padding: 9px 14px; display: flex; justify-content: space-between; gap: 10px; }
+  .screenwrap { padding: 14px; }
+  pre.screen { margin: 0; font-family: "Courier New", monospace; font-size: 12.5px; line-height: 1.35; color: #b8e6a0; white-space: pre; overflow-x: auto; min-height: 24em; }
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; border-top: 1px solid #2c4634; padding: 10px 14px; background: #0e1d12; }
+  .controls button { font-family: "Courier New", monospace; font-size: 13px; background: #1d5c38; color: #f4f1e4; border: 1px solid #c9a86a; padding: 6px 14px; cursor: pointer; }
+  .controls button:hover { background: #27784a; }
+  .controls .count { font-family: "Courier New", monospace; font-size: 13px; color: #c9a86a; }
+  .controls input[type="range"] { flex: 1 1 140px; accent-color: #c9a86a; }
+  .cap { font-size: 13.5px; color: #9db29a; font-style: italic; margin: 10px 2px 0; line-height: 1.55; }
+  /* The playbill is the one light thing in the room. Cream paper,
+     narrow column, acts listed the way a programme lists them. */
+  .playbill { background: #f2ecd9; color: #22301f; padding: 20px 20px 14px; border-top: 8px solid #c9a86a; }
+  .playbill h2 { margin: 0 0 4px; font-size: 21px; font-weight: normal; }
+  .playbill .sub { font-family: "Courier New", monospace; font-size: 11.5px; letter-spacing: 2px; text-transform: uppercase; color: #6b5a2e; margin: 0 0 14px; }
+  .playbill ol { margin: 0; padding-left: 20px; }
+  .playbill li { margin-bottom: 13px; line-height: 1.5; font-size: 14.5px; }
+  .playbill li b { display: block; font-size: 15px; }
+  .playbill .note { border-top: 1px solid #c9bfa0; padding-top: 10px; font-size: 13.5px; line-height: 1.55; }
+  h2.roomhead { font-size: 24px; font-weight: normal; color: #f4f1e4; margin: 46px 0 6px; border-bottom: 1px solid #2c4634; padding-bottom: 6px; }
+  .intro { line-height: 1.7; font-size: 16px; max-width: 70ch; }
+  pre.code { background: #0e1d12; border: 1px solid #2c4634; border-left: 4px solid #c9a86a; padding: 13px 15px; font-family: "Courier New", monospace; font-size: 13px; line-height: 1.6; overflow-x: auto; color: #dfe6d8; }
+  pre.code .ln { display: inline-block; width: 2.4em; color: #6f8a6c; user-select: none; }
+  pre.term { background: #000; border: 1px solid #2c4634; padding: 13px 15px; font-family: "Courier New", monospace; font-size: 13.5px; line-height: 1.6; overflow-x: auto; color: #b8e6a0; }
+  .scriptblock { margin: 22px 0; }
+  .scriptblock h3 { margin: 0 0 4px; font-size: 17px; font-weight: normal; color: #f4f1e4; }
+  .scriptblock p { margin: 0 0 8px; line-height: 1.65; font-size: 15px; max-width: 70ch; }
+  .stills { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 14px; }
+  .stills pre { background: #04150a; border: 1px solid #2c4634; padding: 12px; font-family: "Courier New", monospace; font-size: 10.5px; line-height: 1.3; color: #b8e6a0; overflow-x: auto; margin: 0; }
+  .gallery { margin-top: 14px; }
+  .gallery figure { margin: 0 0 26px; }
+  .gallery img { width: 100%; height: auto; display: block; border: 1px solid #2c4634; }
+  .gallery .narrow { max-width: 720px; }
+  .gallery .offset { max-width: 860px; margin-left: auto; }
+  code { font-family: "Courier New", monospace; color: #c9a86a; }
+  pre code { color: inherit; }
+  a { color: #c9a86a; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .chip { border: 1px solid #c9a86a; color: #e8dfc2; padding: 4px 11px; font-size: 13px; font-family: "Courier New", monospace; }
+  footer { border-top: 1px solid #2c4634; margin-top: 48px; padding-top: 14px; font-size: 13px; color: #9db29a; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  @media (max-width: 900px) { .stagegrid { grid-template-columns: 1fr; } h1 { font-size: 31px; } pre.screen { font-size: 10.5px; } }
+  @media (prefers-reduced-motion: reduce) {
+    /* If a reader asks for less motion, the room holds still. The
+       player script checks the same setting and never autoplays. */
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="room">
 
-  <p class="kicker">Storyboard / one shell script / 124 lines</p>
-  <h1>Fun-Script-Animation</h1>
-  <p class="lede">A terminal animation: a rocket flies back and forth across a field of 50 stars, bobbing on a sine wave, while the cursor is hidden for the duration of the show.</p>
+  <header class="mast">
+    <img class="logo" src="https://raw.githubusercontent.com/Epsilon0xCell/Fun-Script-Animation/main/logo.png" alt="Fun-Script-Animation logo">
+    <div>
+      <p class="kicker">Green room / one shell script / no ending</p>
+      <h1>Fun-Script-Animation</h1>
+      <p class="lede">I wrote one bash script, <code>animation.sh</code>, 124 lines, that puts a rocket on a sine wave across a field of 50 stars in a terminal and leaves it there until I press Ctrl+C. This page is the room it waits in: the stage is up top, the playbill sits beside it, and the script itself is printed below like the text of the play.</p>
+    </div>
+  </header>
 
-  <img class="banner" src="https://raw.githubusercontent.com/Epsilon0xCell/Fun-Script-Animation/main/banner.png" alt="Fun-Script-Animation banner">
+  <figure class="bannerfig">
+    <img src="https://raw.githubusercontent.com/Epsilon0xCell/Fun-Script-Animation/main/banner.png" alt="Fun-Script-Animation banner art from the repo root">
+    <figcaption>Banner art from the repo root, banner.png. The logo beside the title above is logo.png from the same place.</figcaption>
+  </figure>
+
   <div class="badges">
     <img src="https://img.shields.io/github/stars/Epsilon0xCell/Fun-Script-Animation" alt="Stars">
     <img src="https://img.shields.io/github/forks/Epsilon0xCell/Fun-Script-Animation" alt="Forks">
     <img src="https://img.shields.io/github/last-commit/Epsilon0xCell/Fun-Script-Animation" alt="Last commit">
     <img src="https://img.shields.io/github/languages/top/Epsilon0xCell/Fun-Script-Animation" alt="Top language">
     <img src="https://img.shields.io/github/repo-size/Epsilon0xCell/Fun-Script-Animation" alt="Repo size">
+    <img src="https://img.shields.io/github/license/Epsilon0xCell/Fun-Script-Animation" alt="License, MIT">
   </div>
 
-  <div class="strip" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  <h2 class="board-title">The board: the script, panel by panel</h2>
-
-  <div class="panel">
-    <div class="frame-no">01<small>Before frame one</small></div>
+  <div class="stagegrid">
     <div>
-      <h3>The refusal comes first</h3>
-      <p>The script checks for <code>bc</code> before it draws anything, because the sine motion calls <code>bc</code> twice per frame. Without it, both calls fail every frame, the offsets come out empty, and the old behavior was error spam under a rocket that never moves. Now it fails once, up front, with the reason. This panel is a real run on the staging machine, which has no <code>bc</code> installed:</p>
-      <pre class="screen">$ bash animation.sh
+      <div class="proscenium">
+        <div class="valance"><span>Now showing</span><span>animation.sh</span></div>
+        <div class="screenwrap">
+          <!-- I recorded this run myself in a pty on 2026-10-31 instead
+               of drawing a fake sky. The frames in the player are the
+               frames the script printed, in order. The screen below
+               holds the last frame in plain text, so the end of the
+               run is readable with no JavaScript at all. -->
+          <pre class="screen" id="stageScreen">                               *+                                  +
+                                                                .       *
+                                       *
+                                                       +
+   *                        .                                       .
+                                                       +   +   .
+          +                *
+             *                         +   *                                +
+                           .
+          *
+                                       .                               +
+   *                                        .   .                            +
+              +   .                                         🚀 *
+     .
+                                                                  *
+*                                     .
+       .                       .                            *
+           +                .
+                                             *   .
+                        *   +     +
+        +                                            +
+                           *
+                           *
+                                                                    *</pre>
+        </div>
+        <div class="controls">
+          <button type="button" id="btnPlay">Play</button>
+          <button type="button" id="btnPrev">Back</button>
+          <button type="button" id="btnNext">Forward</button>
+          <span class="count" id="frameCount">Frame 31 of 31</span>
+          <input type="range" id="scrub" min="0" max="30" step="1" value="30" aria-label="Frame scrubber">
+        </div>
+      </div>
+      <p class="cap">The stage replay: 31 frames I captured on 2026-10-31 by running animation.sh in a pty set to 80 columns by 24 rows, then reading the position escapes back into a grid. The rocket enters at row 12, column 1, sinks to row 17 at the bottom of the wave, and is back at row 13 by frame 31. One honest note on how I got them: this machine has no bc, and the script needs bc for its sine math, so for the capture run only I put a small stand-in bc on the path that answers the two sums the script asks for. The drawing, the star placement, the pacing of positions, and every escape printed are the script's own. The player starts paused on the last frame. Press Play and it runs from frame 1 to frame 31 once, then stops. It does not loop.</p>
+      <noscript><p class="cap">Stepping through the frames needs JavaScript. The frame on stage above is frame 31, the last one I captured, and three more frames are printed as stills further down the page.</p></noscript>
+    </div>
+
+    <aside class="playbill">
+      <h2>The playbill</h2>
+      <p class="sub">What happens, in order</p>
+      <ol>
+        <li><b>Before the curtain</b> I check for bc first. The sine math calls bc twice per frame, so a missing bc gets one clear refusal and exit code 1, not errors on every frame.</li>
+        <li><b>The set is placed</b> 50 stars go down once, each at 1 + RANDOM % width by 1 + RANDOM % height, each given one character out of . * and + that it keeps for the whole run.</li>
+        <li><b>The curtain instruction</b> I register the cursor restore, trap "tput cnorm" EXIT, before anything hides the cursor. Ctrl+C later gives the cursor back.</li>
+        <li><b>The crossing</b> The rocket starts at column 1 on the middle row and moves 2 columns per frame at about 20 frames per second, one printed buffer per frame so the terminal never repaints half a picture.</li>
+        <li><b>The wave</b> The row is worked out fresh each frame: middle row plus 5 * s(angle) through bc, the angle growing by 0.1 per frame. On my captured run that took the rocket from row 12 down to row 17 and back up.</li>
+        <li><b>The turn</b> At column width - 2 on the right and column 1 on the left the speed flips sign. The test is &gt;= and &lt;= because a 2 column step can jump past the exact edge.</li>
+        <li><b>No final act</b> There is no ending in the script. The loop runs until Ctrl+C, and the EXIT trap restores the cursor on the way out.</li>
+      </ol>
+      <p class="note">Two limits I left in and will say out loud: the terminal size is read once at the start, so resizing the window mid-run keeps the old size until a restart, and in a terminal shorter than about 11 rows the fixed 5 row wave does not fit, so I clamp the row to the screen instead of printing an invalid row 0.</p>
+    </aside>
+  </div>
+
+  <h2 class="roomhead">When bc is not in the room</h2>
+  <p class="intro">This capture needs no stand-in and no pty. On 2026-10-31 I ran the script on this machine, which has tput but no bc, and this is the whole of what it printed. I count this as the script behaving well: it names the missing tool and the reason, exits with code 1, and draws nothing.</p>
+  <pre class="term">$ bash animation.sh
 animation.sh needs bc for the sine-wave motion, and bc was not found in PATH.
-<span class="dim">exit code: 1. No frame was drawn.</span></pre>
-    </div>
+exit code: 1</pre>
+
+  <h2 class="roomhead">The script of the play</h2>
+  <p class="intro">These are lines from animation.sh at the head I built this page from, with their real line numbers. I picked the six places where the script can go wrong in a way a viewer would notice: the missing tool, the missing size, the hidden cursor, the half-painted frame, the missed edge, and the row that leaves the screen.</p>
+
+  <div class="scriptblock">
+    <h3>The refusal, lines 12 to 15</h3>
+    <p>Checked before anything is drawn. Without bc the two sine calls per frame fail every frame and the rocket never moves, so the script says so once and stops.</p>
+    <pre class="code"><span class="ln">12</span>if ! command -v bc &gt;/dev/null 2&gt;&amp;1; then
+<span class="ln">13</span>    echo &quot;animation.sh needs bc for the sine-wave motion, and bc was not found in PATH.&quot; &gt;&amp;2
+<span class="ln">14</span>    exit 1
+<span class="ln">15</span>fi</pre>
   </div>
 
-  <div class="panel">
-    <div class="frame-no">02<small>The set</small></div>
-    <div>
-      <h3>Fifty stars, placed once</h3>
-      <p>The starfield is placed before the loop and never moves again. Each star gets a position at <code>1 + RANDOM % width</code> by <code>1 + RANDOM % height</code> and one character out of <code>.</code>, <code>*</code>, and <code>+</code>, kept for the whole run. The plus 1 matters: terminals number rows and columns from 1, and a position of 0 is invalid. Colors are yellow for the stars, red for the rocket, both stored as literal backslash sequences and interpreted only by the final <code>echo -ne</code> that prints each frame.</p>
-    </div>
+  <div class="scriptblock">
+    <h3>The size, lines 22 to 25</h3>
+    <p>If tput cannot report a size, the fallback is 80 by 24, and a zero is replaced the same way, so no division later ever sees a zero height.</p>
+    <pre class="code"><span class="ln">22</span>width=$(tput cols 2&gt;/dev/null || echo 80)
+<span class="ln">23</span>height=$(tput lines 2&gt;/dev/null || echo 24)
+<span class="ln">24</span>[ &quot;$width&quot; -gt 0 ] 2&gt;/dev/null || width=80
+<span class="ln">25</span>[ &quot;$height&quot; -gt 0 ] 2&gt;/dev/null || height=24</pre>
   </div>
 
-  <div class="panel">
-    <div class="frame-no">03<small>Frame one</small></div>
-    <div>
-      <h3>The rocket enters at the middle row</h3>
-      <p>Each frame is built in a single buffer and printed with one write, so the terminal never repaints half a frame. In a pty run I captured for this page (with a small stub standing in for the missing <code>bc</code>), the first frame put the rocket at row 12, column 1 of an 80 by 24 terminal, the middle row, moving two columns per frame at about 20 frames per second:</p>
-      <pre class="screen"><span class="dim">frame 1</span>  cursor to row 12, col 1   <span class="rocket">[rocket]</span>
-<span class="dim">frame 2</span>  cursor to row 12, col 3   <span class="rocket">[rocket]</span>
-<span class="dim">frame 3</span>  cursor to row 13, col 5   <span class="rocket">[rocket]</span>
-<span class="dim">frame 4</span>  cursor to row 13, col 7   <span class="rocket">[rocket]</span></pre>
-      <p>The row is recomputed from the middle on every frame instead of added to the last row, so rounding in the sine math cannot drift the rocket away from the center over a long run.</p>
-    </div>
+  <div class="scriptblock">
+    <h3>The restore, line 33</h3>
+    <p>One line, registered before the loop and before the cursor is hidden. An earlier version of this script had the trap after the infinite loop, where it could never run, and Ctrl+C left the cursor hidden.</p>
+    <pre class="code"><span class="ln">33</span>trap &quot;tput cnorm&quot; EXIT</pre>
   </div>
 
-  <div class="panel">
-    <div class="frame-no">04<small>Short terminal</small></div>
-    <div>
-      <h3>The wave gets clamped to the screen</h3>
-      <p>The wave amplitude is fixed at 5 rows around the middle. On a terminal shorter than about 11 rows, that math pushes the rocket to row 0 or past the last row, and the position escape for those rows is invalid. Deep Wave 2 proved it with a stub: on an 8-row terminal the old script emitted negative-row escapes in 5 of 6 rocket frames. The fixed script clamps <code>y</code> to the screen, 1 at the top and <code>height</code> at the bottom, and the same test emits 0 bad escapes, with the rocket sitting at row 1. The size itself is guarded too: if <code>tput</code> cannot report one, the script falls back to 80 columns by 24 rows instead of dividing by zero. One limit I left in on purpose: the size is read once at the start, so resizing the window mid-run keeps the old size until you restart the script.</p>
-    </div>
+  <div class="scriptblock">
+    <h3>One frame, one write, lines 87 to 93</h3>
+    <p>All 50 stars and the rocket go into one buffer, printed with a single echo -ne. Separate writes would let the terminal repaint between stars and rocket, which reads as flicker.</p>
+    <pre class="code"><span class="ln">87</span>    for ((i=0; i&lt;num_stars; i++)); do
+<span class="ln">88</span>        buffer+=$(printf &quot;\033[%s;%sH%s%s%s&quot; &quot;${stars_y[$i]}&quot; &quot;${stars_x[$i]}&quot; &quot;$C_STARS&quot; &quot;${stars_char[$i]}&quot; &quot;$C_RESET&quot;)
+<span class="ln">89</span>    done
+<span class="ln">90</span>
+<span class="ln">91</span>    buffer+=$(printf &quot;\033[%s;%sH%s🚀%s&quot; &quot;$y&quot; &quot;$x&quot; &quot;$C_ROCKET&quot; &quot;$C_RESET&quot;)
+<span class="ln">92</span>
+<span class="ln">93</span>    echo -ne &quot;$buffer&quot;</pre>
   </div>
 
-  <div class="panel">
-    <div class="frame-no">05<small>The bounce</small></div>
-    <div>
-      <h3>It turns around without leaving</h3>
-      <p>The bounce test uses greater-or-equal and less-or-equal, never equality, because the rocket moves two columns per frame and can step straight past the exact edge column. An equality test would miss the edge on those steps and the rocket would leave the screen. It flips direction at column 1 on the left and at <code>width - 2</code> on the right, then flies back across the same fixed stars.</p>
-    </div>
+  <div class="scriptblock">
+    <h3>The turn, lines 99 to 102</h3>
+    <p>The rocket moves 2 columns per frame, so it can step past the exact edge column. The bounce test uses &gt;= and &lt;= for that reason.</p>
+    <pre class="code"><span class="ln">99</span>    x=$((x + x_speed))
+<span class="ln">100</span>    if [ $x -ge $((width - 2)) ] || [ $x -le 1 ]; then
+<span class="ln">101</span>        x_speed=$((x_speed * -1))
+<span class="ln">102</span>    fi</pre>
   </div>
 
-  <div class="panel">
-    <div class="frame-no">06<small>Exit</small></div>
-    <div>
-      <h3>Ctrl+C gives the cursor back</h3>
-      <p>The cursor is hidden with <code>tput civis</code> only after the restore trap is registered, and the trap sits before the loop: <code>trap "tput cnorm" EXIT</code>. The first version of this script put that line after the infinite loop, where it could never run, so Ctrl+C left the cursor hidden. It is an EXIT trap only, on purpose; trapping INT without exiting would swallow Ctrl+C and the animation would never stop. Stop the show and the stub harness log shows <code>civis</code> at the start and <code>cnorm</code> after the interrupt, which is the proof the cursor comes back.</p>
-    </div>
+  <div class="scriptblock">
+    <h3>The wave and the clamp, lines 109 to 118</h3>
+    <p>The row is derived fresh from the middle each frame, so rounding cannot drift it over a long run. The clamp at the end is the fix for short terminals: the wave is 5 rows each way, and a row of 0 or a row past the bottom is an invalid position escape, so the row is held inside the screen.</p>
+    <pre class="code"><span class="ln">109</span>    angle=$(echo &quot;$angle + $y_step&quot; | bc -l)
+<span class="ln">110</span>    y_offset=$(echo &quot;$y_amp * s($angle)&quot; | bc -l)
+<span class="ln">111</span>    y=$(( height / 2 + $(printf &quot;%.0f&quot; &quot;$y_offset&quot;) ))
+<span class="ln">112</span>    # My amplitude is fixed at 5 rows, so on a terminal shorter than
+<span class="ln">113</span>    # about 11 rows the wave would push the rocket to row 0 or past
+<span class="ln">114</span>    # the last row, and the position escape for those rows is invalid.
+<span class="ln">115</span>    # I clamp to the screen instead of trusting the terminal to be
+<span class="ln">116</span>    # tall enough for the wave I chose.
+<span class="ln">117</span>    [ &quot;$y&quot; -lt 1 ] &amp;&amp; y=1
+<span class="ln">118</span>    [ &quot;$y&quot; -gt &quot;$height&quot; ] &amp;&amp; y=$height</pre>
   </div>
 
-  <section class="prose">
-    <h2 class="plain">What this is</h2>
-    <p>I wrote <code>animation.sh</code> as a small terminal show with no ending of its own. There is no story, no score, and nothing to win. A rocket crosses a starfield on a sine wave until I stop it. The whole repo is that one script, 124 lines of bash, plus the banner and logo.</p>
-    <p>Most of the work in the last two passes was not the picture. It was the edges: a cursor that has to come back, a terminal too short for the wave, a missing <code>bc</code> that should say so once instead of failing twice per frame forever. A toy script is a good place to practice that, because the failure modes are easy to see and the fix is a few lines you can point at.</p>
-  </section>
+  <h2 class="roomhead">Three stills from the run</h2>
+  <p class="intro">The same capture as the stage, printed still. Frame 1 has the rocket at row 12, column 1, where every run starts. Frame 16 sits at row 17, the bottom of the wave on this run. Frame 31 is where my capture stopped, at row 13, column 61. The stars do not move between stills. Only the rocket does.</p>
+  <div class="stills">
+    <figure>
+      <pre>                               *+                                  +
+                                                                .       *
+                                       *
+                                                       +
+   *                        .                                       .
+                                                       +   +   .
+          +                *
+             *                         +   *                                +
+                           .
+          *
+                                       .                               +
+🚀  *                                        .   .                            +
+              +   .                                           *
+     .
+                                                                  *
+*                                     .
+       .                       .                            *
+           +                .
+                                             *   .
+                        *   +     +
+        +                                            +
+                           *
+                           *
+                                                                    *</pre>
+      <figcaption>Frame 1 of the 2026-10-31 capture, 80 by 24. Rocket at row 12, column 1.</figcaption>
+    </figure>
+    <figure>
+      <pre>                               *+                                  +
+                                                                .       *
+                                       *
+                                                       +
+   *                        .                                       .
+                                                       +   +   .
+          +                *
+             *                         +   *                                +
+                           .
+          *
+                                       .                               +
+   *                                        .   .                            +
+              +   .                                           *
+     .
+                                                                  *
+*                                     .
+       .                      🚀.                            *
+           +                .
+                                             *   .
+                        *   +     +
+        +                                            +
+                           *
+                           *
+                                                                    *</pre>
+      <figcaption>Frame 16 of the same capture. Rocket at row 17, column 31, the lowest row the wave reached.</figcaption>
+    </figure>
+    <figure>
+      <pre>                               *+                                  +
+                                                                .       *
+                                       *
+                                                       +
+   *                        .                                       .
+                                                       +   +   .
+          +                *
+             *                         +   *                                +
+                           .
+          *
+                                       .                               +
+   *                                        .   .                            +
+              +   .                                         🚀 *
+     .
+                                                                  *
+*                                     .
+       .                       .                            *
+           +                .
+                                             *   .
+                        *   +     +
+        +                                            +
+                           *
+                           *
+                                                                    *</pre>
+      <figcaption>Frame 31 of the same capture. Rocket at row 13, column 61, rising again.</figcaption>
+    </figure>
+  </div>
 
-  <h2 class="plain">Run it</h2>
-  <!-- The README command, exactly. There is no install step and no
-       second command hiding anywhere in the repo. -->
-  <pre class="screen">$ bash animation.sh
-<span class="dim">Stop with Ctrl+C. The script restores the cursor on exit.
-Needs: a terminal, tput, and bc.</span></pre>
+  <h2 class="roomhead">Run it yourself</h2>
+  <!-- The README command, word for word. There is no install step. -->
+  <pre class="term">$ bash animation.sh</pre>
+  <p class="intro">Stop it with Ctrl+C. The script restores the cursor on exit. It needs a terminal, tput, and bc.</p>
   <div class="chips">
     <span class="chip">Bash</span>
-    <span class="chip">tput (ncurses)</span>
-    <span class="chip">bc for sine math</span>
-    <span class="chip">ANSI position escapes</span>
-    <span class="chip">About 20 frames per second</span>
+    <span class="chip">bc, two calls per frame</span>
+    <span class="chip">tput cols, lines, civis, cnorm</span>
+    <span class="chip">50 stars, placed once</span>
+    <span class="chip">sleep 0.05, about 20 frames per second</span>
   </div>
-  <p>Source: <a href="https://github.com/Epsilon0xCell/Fun-Script-Animation">github.com/Epsilon0xCell/Fun-Script-Animation</a> and my profile at <a href="https://github.com/Epsilon0xCell">github.com/Epsilon0xCell</a>.</p>
+  <p class="intro">Source: <a href="https://github.com/Epsilon0xCell/Fun-Script-Animation">github.com/Epsilon0xCell/Fun-Script-Animation</a>. My profile: <a href="https://github.com/Epsilon0xCell">github.com/Epsilon0xCell</a>.</p>
 
-  <h2 class="plain">What was not watched</h2>
-  <p>The campaign verified this script under a stub <code>tput</code> and <code>bc</code> harness and, for this page, I ran it briefly in a pty on the staging machine: the refusal in panel 01 is that run, word for word, and the positions in panel 03 were captured from its output. The campaign did not watch it on a real terminal display, so colors and pacing are as coded, not as seen on a physical screen. I am saying that plainly because a storyboard can make a 124-line script look more finished than it is.</p>
+  <h2 class="roomhead">The prompt book: drawings from the repo</h2>
+  <p class="intro">The Fun-Script-Animation-Visuals folder holds six hand drawn sheets on notebook paper, plus a PDF of the set and notes. I show all six PNG files here, each captioned with what its own sheet covers. The folder notes describe five sheets and the folder holds a sixth, schematic.png, so I show six and say so.</p>
+  <div class="gallery">
+    <figure class="narrow">
+      <img src="https://raw.githubusercontent.com/Epsilon0xCell/Fun-Script-Animation/main/Fun-Script-Animation-Visuals/architecture.png" alt="Hand drawn architecture sheet for Fun-Script-Animation">
+      <figcaption>architecture.png, from Fun-Script-Animation-Visuals: the put-together, biggest file at the top, real names read out of the source under it.</figcaption>
+    </figure>
+    <figure class="offset">
+      <img src="https://raw.githubusercontent.com/Epsilon0xCell/Fun-Script-Animation/main/Fun-Script-Animation-Visuals/flowchart.png" alt="Hand drawn flowchart sheet for Fun-Script-Animation">
+      <figcaption>flowchart.png, from Fun-Script-Animation-Visuals: the run, from the entry file through the real steps the code takes.</figcaption>
+    </figure>
+    <figure>
+      <img src="https://raw.githubusercontent.com/Epsilon0xCell/Fun-Script-Animation/main/Fun-Script-Animation-Visuals/product-map.png" alt="Hand drawn product map sheet for Fun-Script-Animation">
+      <figcaption>product-map.png, from Fun-Script-Animation-Visuals: what the project is for, what goes in, what comes out, and where it stops.</figcaption>
+    </figure>
+    <figure class="narrow">
+      <img src="https://raw.githubusercontent.com/Epsilon0xCell/Fun-Script-Animation/main/Fun-Script-Animation-Visuals/data-flow.png" alt="Hand drawn data flow sheet for Fun-Script-Animation">
+      <figcaption>data-flow.png, from Fun-Script-Animation-Visuals: the data path in one direction, file to result.</figcaption>
+    </figure>
+    <figure class="offset">
+      <img src="https://raw.githubusercontent.com/Epsilon0xCell/Fun-Script-Animation/main/Fun-Script-Animation-Visuals/statistics.png" alt="Hand drawn statistics sheet for Fun-Script-Animation">
+      <figcaption>statistics.png, from Fun-Script-Animation-Visuals: the counts, drawn as bars that can be checked against the repo.</figcaption>
+    </figure>
+    <figure>
+      <img src="https://raw.githubusercontent.com/Epsilon0xCell/Fun-Script-Animation/main/Fun-Script-Animation-Visuals/schematic.png" alt="Hand drawn schematic sheet for Fun-Script-Animation">
+      <figcaption>schematic.png, from Fun-Script-Animation-Visuals: the sixth sheet in the folder, the second diagram set alongside the five the notes describe.</figcaption>
+    </figure>
+  </div>
 
   <footer>
     <span>Built by Epsilon0xCell</span>
-    <span>Storyboard drawn from real runs. The rocket glyph stays out of this page; the script draws its own.</span>
+    <span>Green room notes, 2026-10-31: frames captured in a pty at 80 by 24, refusal captured on a machine with no bc.</span>
   </footer>
 
 </div>
+<script>
+  // I wrote this player for this page only. It steps through the 31
+  // frames I captured from the real run, one frame every 130 ms, and
+  // stops at the last one. A loop would lie about the capture: my
+  // recording ends at frame 31, so the player ends there too.
+  (function () {
+    var frames = ["                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n🚀  *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n  🚀*                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n    🚀         +   .                                           *\n     .\n                                                                  *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n      🚀       +   .                                           *\n     .\n                                                                  *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .  🚀\n                                                                  *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .    🚀\n                                                                  *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n            🚀                                                     *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n              🚀                                                   *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*               🚀                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                 🚀                   .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                   🚀                 .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                     🚀               .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .\n       .                🚀      .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .\n       .                  🚀    .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .\n       .                    🚀  .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .\n       .                      🚀.                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .\n       .                       .🚀                           *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .\n       .                       .  🚀                         *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .\n       .                       .    🚀                       *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .\n       .                       .      🚀                     *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .\n       .                       .        🚀                   *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .   🚀\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .     🚀\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                                  *\n*                                     .       🚀\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                🚀                 *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                  🚀               *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .\n                                                    🚀             *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .                                                🚀\n                                                                  *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                           *\n     .                                                  🚀\n                                                                  *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                       🚀   *\n     .\n                                                                  *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *", "                               *+                                  +\n                                                                .       *\n                                       *\n                                                       +\n   *                        .                                       .\n                                                       +   +   .\n          +                *\n             *                         +   *                                +\n                           .\n          *\n                                       .                               +\n   *                                        .   .                            +\n              +   .                                         🚀 *\n     .\n                                                                  *\n*                                     .\n       .                       .                            *\n           +                .\n                                             *   .\n                        *   +     +\n        +                                            +\n                           *\n                           *\n                                                                    *"];
+    var screen = document.getElementById('stageScreen');
+    var count = document.getElementById('frameCount');
+    var scrub = document.getElementById('scrub');
+    var btnPlay = document.getElementById('btnPlay');
+    var idx = frames.length - 1;
+    var timer = null;
+    function show(i) {
+      idx = Math.max(0, Math.min(frames.length - 1, i));
+      screen.textContent = frames[idx];
+      count.textContent = 'Frame ' + (idx + 1) + ' of ' + frames.length;
+      scrub.value = idx;
+    }
+    function stop() {
+      if (timer !== null) { clearInterval(timer); timer = null; }
+      btnPlay.textContent = 'Play';
+    }
+    btnPlay.addEventListener('click', function () {
+      if (timer !== null) { stop(); return; }
+      // If the reader sits on the last frame, Play means watch the
+      // run from the top, so I restart at frame 1.
+      if (idx >= frames.length - 1) { show(0); }
+      btnPlay.textContent = 'Pause';
+      timer = setInterval(function () {
+        if (idx >= frames.length - 1) { stop(); return; }
+        show(idx + 1);
+      }, 130);
+    });
+    document.getElementById('btnPrev').addEventListener('click', function () { stop(); show(idx - 1); });
+    document.getElementById('btnNext').addEventListener('click', function () { stop(); show(idx + 1); });
+    scrub.addEventListener('input', function () { stop(); show(parseInt(scrub.value, 10)); });
+    // I check the reader's motion setting here as well as in the CSS.
+    // With reduced motion the player stays exactly where it loaded:
+    // paused on the final frame, with the step buttons working.
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) { stop(); }
+    show(frames.length - 1);
+  })();
+</script>
 </body>
 </html>
