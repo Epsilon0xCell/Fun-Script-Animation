@@ -1,8 +1,12 @@
-![Banner](banner.png)
+![Intro](intro-banner.png)
 
 # Fun-Script-Animation
+![Banner](banner.png)
 
+![Scene](scene.svg)
 A terminal animation: a rocket flies back and forth across a field of 50 stars, bobbing on a sine wave, while the cursor is hidden for the duration of the show.
+
+![Separator](sep-heavy.svg)
 
 ## Run
 
@@ -12,9 +16,13 @@ bash animation.sh
 
 Stop with Ctrl+C. The script restores the cursor on exit.
 
+![Separator](sep-light.svg)
+
 ## Requirements
 
 A terminal, `tput`, and `bc`. If `tput` cannot report a terminal size, the script falls back to 80 columns by 24 rows instead of dividing by zero.
+
+![Separator](sep-heavy.svg)
 
 ## Verified behaviour and fixes
 

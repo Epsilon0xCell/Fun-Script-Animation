@@ -6,73 +6,24 @@
 <title>Fun-Script-Animation: The Green Room Terminal Theatre</title>
 <!-- pages-campaign site for Epsilon0xCell/Fun-Script-Animation; source of truth: Fun-Script-Animation-Website/ on the default branch -->
 <style>
-  /* I set this page in a green room because that is where a show waits
-     before it goes on. My script is a show with no ending, so the room
-     around the stage stays dark green and quiet, and the terminal on
-     stage does all the moving. */
-  * { box-sizing: border-box; }
-  body { margin: 0; background: #0b120d; color: #dfe6d8; font-family: Georgia, "Times New Roman", serif; }
-  .room { max-width: 1180px; margin: 0 auto; padding: 30px 22px 56px; }
-  .mast { display: flex; gap: 20px; align-items: center; border-bottom: 1px solid #2c4634; padding-bottom: 18px; }
-  .mast img.logo { width: 74px; height: 74px; object-fit: contain; }
-  .kicker { margin: 0; font-family: "Courier New", monospace; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #c9a86a; }
-  h1 { margin: 4px 0 6px; font-size: 40px; font-weight: normal; color: #f4f1e4; }
-  .lede { margin: 0; font-size: 17px; line-height: 1.6; max-width: 64ch; }
-  figure.bannerfig { margin: 20px 0 8px; }
-  figure.bannerfig img { width: 100%; height: auto; display: block; border: 1px solid #2c4634; }
-  figcaption { font-size: 13px; color: #9db29a; padding-top: 6px; font-style: italic; }
-  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 6px; }
-  .badges img { height: 20px; }
-  /* The proscenium is two nested borders and a valance bar. I kept it
-     flat on purpose: the depth on this page comes from the dark room
-     against the lit stage, not from shadows stacked on shadows. */
-  .stagegrid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 26px; margin-top: 30px; align-items: start; }
-  .proscenium { border: 3px solid #c9a86a; outline: 10px solid #14301e; background: #04150a; }
-  .valance { background: #1d5c38; color: #f4f1e4; font-family: "Courier New", monospace; letter-spacing: 3px; text-transform: uppercase; font-size: 12px; padding: 9px 14px; display: flex; justify-content: space-between; gap: 10px; }
-  .screenwrap { padding: 14px; }
-  pre.screen { margin: 0; font-family: "Courier New", monospace; font-size: 12.5px; line-height: 1.35; color: #b8e6a0; white-space: pre; overflow-x: auto; min-height: 24em; }
-  .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; border-top: 1px solid #2c4634; padding: 10px 14px; background: #0e1d12; }
-  .controls button { font-family: "Courier New", monospace; font-size: 13px; background: #1d5c38; color: #f4f1e4; border: 1px solid #c9a86a; padding: 6px 14px; cursor: pointer; }
-  .controls button:hover { background: #27784a; }
-  .controls .count { font-family: "Courier New", monospace; font-size: 13px; color: #c9a86a; }
-  .controls input[type="range"] { flex: 1 1 140px; accent-color: #c9a86a; }
-  .cap { font-size: 13.5px; color: #9db29a; font-style: italic; margin: 10px 2px 0; line-height: 1.55; }
-  /* The playbill is the one light thing in the room. Cream paper,
-     narrow column, acts listed the way a programme lists them. */
-  .playbill { background: #f2ecd9; color: #22301f; padding: 20px 20px 14px; border-top: 8px solid #c9a86a; }
-  .playbill h2 { margin: 0 0 4px; font-size: 21px; font-weight: normal; }
-  .playbill .sub { font-family: "Courier New", monospace; font-size: 11.5px; letter-spacing: 2px; text-transform: uppercase; color: #6b5a2e; margin: 0 0 14px; }
-  .playbill ol { margin: 0; padding-left: 20px; }
-  .playbill li { margin-bottom: 13px; line-height: 1.5; font-size: 14.5px; }
-  .playbill li b { display: block; font-size: 15px; }
-  .playbill .note { border-top: 1px solid #c9bfa0; padding-top: 10px; font-size: 13.5px; line-height: 1.55; }
-  h2.roomhead { font-size: 24px; font-weight: normal; color: #f4f1e4; margin: 46px 0 6px; border-bottom: 1px solid #2c4634; padding-bottom: 6px; }
-  .intro { line-height: 1.7; font-size: 16px; max-width: 70ch; }
-  pre.code { background: #0e1d12; border: 1px solid #2c4634; border-left: 4px solid #c9a86a; padding: 13px 15px; font-family: "Courier New", monospace; font-size: 13px; line-height: 1.6; overflow-x: auto; color: #dfe6d8; }
-  pre.code .ln { display: inline-block; width: 2.4em; color: #6f8a6c; user-select: none; }
-  pre.term { background: #000; border: 1px solid #2c4634; padding: 13px 15px; font-family: "Courier New", monospace; font-size: 13.5px; line-height: 1.6; overflow-x: auto; color: #b8e6a0; }
-  .scriptblock { margin: 22px 0; }
-  .scriptblock h3 { margin: 0 0 4px; font-size: 17px; font-weight: normal; color: #f4f1e4; }
-  .scriptblock p { margin: 0 0 8px; line-height: 1.65; font-size: 15px; max-width: 70ch; }
-  .stills { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 14px; }
-  .stills pre { background: #04150a; border: 1px solid #2c4634; padding: 12px; font-family: "Courier New", monospace; font-size: 10.5px; line-height: 1.3; color: #b8e6a0; overflow-x: auto; margin: 0; }
-  .gallery { margin-top: 14px; }
-  .gallery figure { margin: 0 0 26px; }
-  .gallery img { width: 100%; height: auto; display: block; border: 1px solid #2c4634; }
-  .gallery .narrow { max-width: 720px; }
-  .gallery .offset { max-width: 860px; margin-left: auto; }
-  code { font-family: "Courier New", monospace; color: #c9a86a; }
-  pre code { color: inherit; }
-  a { color: #c9a86a; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
-  .chip { border: 1px solid #c9a86a; color: #e8dfc2; padding: 4px 11px; font-size: 13px; font-family: "Courier New", monospace; }
-  footer { border-top: 1px solid #2c4634; margin-top: 48px; padding-top: 14px; font-size: 13px; color: #9db29a; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-  @media (max-width: 900px) { .stagegrid { grid-template-columns: 1fr; } h1 { font-size: 31px; } pre.screen { font-size: 10.5px; } }
-  @media (prefers-reduced-motion: reduce) {
-    /* If a reader asks for less motion, the room holds still. The
-       player script checks the same setting and never autoplays. */
-    * { transition: none !important; scroll-behavior: auto !important; }
-  }
+@font-face{font-family:'Akt';src:url('fonts/Akt.ttf') format('truetype')}
+@font-face{font-family:'Bitter';src:url('fonts/Bitter.ttf') format('truetype')}
+:root{--bg:#4a4a4c;--slab:#333336;--ink:#ece9e2;--gold:#e8a820;--moss:#7a9a5c;--silver:#c8ccd0;--line:#6a6a6e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Bitter',serif;line-height:1.6}
+a{color:var(--silver)}a:hover{color:var(--gold)}
+h1,h2,h3{font-family:'Akt',sans-serif;letter-spacing:.02em}
+.mast,.room,main,header,footer{max-width:1080px;margin:0 auto;padding:1rem 5vw}
+img.banner{width:100%;height:auto;border:3px solid var(--line)}
+.logo{width:84px;height:84px}
+.proscenium,.screenwrap,.stagegrid{background:var(--slab);border:4px solid var(--gold);border-radius:6px;padding:1rem}
+.screen,.term{background:#101214;color:#d8e6d0;padding:1rem;overflow-x:auto;font-family:'DejaVu Sans Mono',monospace;white-space:pre}
+.room,.playbill,.scriptblock,.gallery,.note{background:var(--slab);border:1px solid #b8b4a4;border-radius:4px;padding:1.1rem 1.3rem;margin:1.2rem auto;max-width:1080px}
+button{font-family:'Bitter',serif;background:linear-gradient(180deg,#8a6a3c,#6e5228);color:#fff;border:2px solid #241c10;border-radius:16px;padding:.5rem 1.1rem;cursor:pointer}
+button:hover{box-shadow:0 4px 0 rgba(232,168,32,.5)}button:active{transform:translateY(3px)}
+pre,.code{background:#1c1c1e;color:#e8e6df;padding:1rem;border-left:5px solid var(--silver);overflow-x:auto}
+.gallery img,.stills img{width:100%;height:auto;background:#f4f1e8;border:2px solid var(--line)}
+.chips,.badges{display:flex;gap:.5rem;flex-wrap:wrap}.chip,.chips span{background:#242426;border:1px solid var(--line);border-radius:4px;padding:.2rem .7rem}
+footer{color:var(--silver);border-top:3px solid var(--line)}
 </style>
 </head>
 <body>
