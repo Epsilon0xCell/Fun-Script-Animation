@@ -1,7 +1,9 @@
-![Intro](intro-banner.png)
+![Intro: the pixel rocket at the far edge of a deep black stage turning around, its orange flame bending with the turn, a cyan dotted trail curving behind it across a field of yellow pixel stars](intro-banner.png)
 
 # Fun-Script-Animation
-![Banner](banner.png)
+
+<p align="center"><img src="logo.png" alt="Fun-Script-Animation logo: a chunky white pixel rocket flying right with an orange pixel flame, three small yellow pixel stars around it on deep space black" width="200"></p>
+![Banner: a deep black terminal stage scattered with fifty small yellow pixel stars, a white pixel rocket crossing the middle on a gentle sine wave path marked by a faint cyan dotted trail, orange engine flame](banner.png)
 
 ![Scene](scene.svg)
 A terminal animation: a rocket flies back and forth across a field of 50 stars, bobbing on a sine wave, while the cursor is hidden for the duration of the show.
