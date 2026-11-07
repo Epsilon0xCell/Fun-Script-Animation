@@ -5,7 +5,7 @@
 <p align="center"><img src="logo.png" alt="Fun-Script-Animation logo: a chunky white pixel rocket flying right with an orange pixel flame, three small yellow pixel stars around it on deep space black" width="200"></p>
 ![Banner: a deep black terminal stage scattered with fifty small yellow pixel stars, a white pixel rocket crossing the middle on a gentle sine wave path marked by a faint cyan dotted trail, orange engine flame](banner.png)
 
-![Scene](scene.svg)
+![Scene: an animated forge scene panel, dark metal shapes around a single orange glow](scene.svg)
 A terminal animation: a rocket flies back and forth across a field of 50 stars, bobbing on a sine wave, while the cursor is hidden for the duration of the show.
 
 ![Separator](sep-heavy.svg)
